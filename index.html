@@ -1,0 +1,70 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>iCould</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/index.js"></script>
+</head>
+<body ng-controller="ct">
+	<div class="container">
+		<div class="left">
+			<div class="logo">
+			   <span>iCloud</span>
+			   <span>提醒事项</span>
+			   <span ng-click="add()">+</span>
+			</div>
+			<ul class="item-box" ng-repeat="v in todo track by $index">
+				<li class="item" ng-click="check($index)" ng-class="$index==index?'hot':''"><span ng-style="{background:v.color}"></span>{{v.title}}</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div class="top">
+				<input type="search" placeholder='搜索所有提醒'>
+			</div>
+             <!-- 弹出框 -->
+			<div class="alert-box" ng-show="flag1">
+				<div class="search"><input type="text" ng-model="tits" ng-style="{color:tys}"></div>
+				<div class="selec">列表颜色</div>
+				<div class="color-box">
+					<div class="color" ng-repeat="v in colorst" ng-style="{backgroundColor:v,borderColor:tys==v?v:'rgba(0,0,0,0)'}"
+					ng-click="scolor(v)"></div>
+				</div>
+				<div class="bottom">
+					<span class="clear" ng-click="delList()">清除</span>
+					<span class="quxiao" ng-click="finished()">完成</span>
+					<span class="finish" ng-click="flag1=false">取消</span>
+				</div>
+			</div>
+
+			<div class="tit">
+				<div class="left1" ng-style="{color:todo[index].color}">{{todo[index].title}}</div>
+				<span class="right" ng-style="{color:todo[index].color}" ng-click="flag1=!flag1">选项</span>
+			</div>
+			<div class="yiwan-box">
+			<div class="buttons scl1" ng-click="flag=!flag" ng-class="{true:'scl2',false:'scl1'}[flag]"></div>
+			<div class="yiwan">已完成：{{doneNums}}项</div>
+			<div class="clearbot" ng-style="{color:todo[index].color}" ng-click="clearbth($index)">清除完成项</div>
+			</div>
+		  <div class="mx">
+			<div class="list-box" ng-show="flag" ng-repeat="v in todo[index].list |filter:'true'">
+				<div class="btn" ng-click="set(v,false)" ng-style="{borderColor:todo[index].color,backgroundColor:todo[index].color}"></div>
+	            <div class="list">	
+	            	{{v.title}}
+	            </div>
+            </div>
+          </div>
+        
+          <div class="list-box liov" ng-repeat="v in todo[index].list |filter:'false'">
+          <div class="bx">
+            <div class="btn" ng-click="set(v,true)" ng-style="{borderColor:todo[index].color,backgroundColor:''}"></div>
+             <div class="list" contenteditable ng-blur="change(v,$event)">
+            	{{v.title}}
+            </div>
+          </div> 
+          </div>
+          <div class="newadd" ng-click="addlist()">新建...</div> 
+	</div>
+</body>
+</html>
